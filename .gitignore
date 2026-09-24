@@ -1,0 +1,9 @@
+# Готові файли продуктів не зберігаємо в публічному репозиторії — вони відтворюються з build.py
+products/*/dist/
+products/*/listing/raw/
+__pycache__/
+*.pyc
+# Секрети / токени платформ — ніколи не комітити
+.secrets/
+*.token
+etsy_tokens.json
