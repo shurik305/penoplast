@@ -1,0 +1,49 @@
+Price every cleaning job in about a minute — by floor area in m² (or sq ft), with VAT/GST, extras, travel and your profit worked out for you. Then send a professional A4 quote to your client.
+
+Made for small cleaning companies and self-employed cleaners in the UK, Ireland, Europe, Australia, New Zealand, the US and Canada. Most pricing templates only work in square feet and dollars — this one is metric-first, with VAT/GST built in.
+
+★ WHAT'S INSIDE — 7 connected sheets
+• Quote Calculator — floor area or bedrooms → labour hours, time on site, price, VAT, price per m² and your profit on the job
+• Client Quote — a print-ready A4 quote, filled in automatically (save as PDF and send)
+• Price List Builder — standard prices by property size for 7 services, plus weekly, fortnightly and monthly rates
+• Break-even — your monthly fixed costs and hours → the minimum hourly rate you must charge
+• Settings — wages, on-costs, supplies, overheads, margin, VAT/GST, minimum charge, travel, rounding
+• Quote Log — track every quote: win rate, open pipeline, overdue follow-ups
+• Start Here — 5-minute setup guide and pricing tips
+
+★ 7 SERVICE TYPES (rename or change them)
+Regular clean, deep clean, end of tenancy / move-out, after builders, office regular clean, office deep clean, short-let / Airbnb turnover. Each has a "what's included" checklist that prints on the quote.
+
+★ 14 EXTRAS
+Inside oven, fridge/freezer, kitchen cupboards, interior windows, bed linen, ironing, laundry, balcony, blinds, wall spot-cleaning, pet hair, extra bathroom, carpet/upholstery, waste removal — time-based or fixed price.
+
+★ 4 EDITIONS INCLUDED
+• UK — GBP, VAT 20%, miles
+• EU & Ireland — EUR, VAT (set your country's rate), km
+• Australia & NZ — AUD, GST 10%, km
+• US & Canada — USD, square feet, miles
+Any currency and tax rate can be set in any edition.
+
+★ WHAT YOU GET (instant download)
+• 4 × .xlsx spreadsheet (one per edition)
+• Quick-Start Guide (PDF, 2 pages)
+
+★ WORKS IN
+Microsoft Excel 2010 or newer (Windows and Mac), Microsoft 365, Google Sheets (upload the file to Google Drive), LibreOffice. No macros, no subscription, no sign-up.
+
+★ GOOD TO KNOW
+• The default production rates (m² per cleaner-hour) and costs are realistic starting points — adjust them to your own timings and prices.
+• Calculated cells are protected without a password so formulas aren't overwritten by accident; you can unprotect any sheet to customise it.
+• This is a digital download — nothing will be shipped.
+• This tool does not give tax, legal or accounting advice.
+
+★ HOW IT WAS MADE
+{{MADE_BY}} All formulas were tested in all four editions.
+
+★ LICENCE
+For use in your own business. Please don't resell, share or redistribute the files.
+
+★ REFUNDS
+Because this is an instant digital download, returns and exchanges aren't accepted. The download starts immediately after purchase, so the right of withdrawal ends once it has started. If anything doesn't work, send us a message — we'll fix it or help you set it up.
+
+Questions? Send a message — we usually reply within 1–2 working days.
