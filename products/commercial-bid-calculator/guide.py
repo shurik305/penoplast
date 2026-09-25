@@ -40,11 +40,12 @@ if __name__ == "__main__":
                           "its size, frequency and traffic level. Add periodic services (windows, carpets, floor care) "
                           "with how many times a year, and any consumables you will supply.",
                           "Read the monthly fee, annual value, weekly hours, the team you need for the cleaning "
-                          "window and your monthly profit. A red message warns you when the fee falls below your "
-                          "break-even rate."]),
+                          "window and your monthly profit. The status line is green when the fee meets your target "
+                          "margin, amber when it only covers your costs, and red when it is below break-even or "
+                          "a line needs fixing."]),
          ("Send the proposal", ["Open Client Proposal — both pages are filled in. Use File > Print > Save as PDF and "
                                 "send it. Record the bid in Bid Log to track your win rate and follow-ups."]),
          ("Using Google Sheets", ["Upload the .xlsx file to Google Drive and open it with Google Sheets (or File > "
-                                  "Import > Upload in Sheets). All formulas work; sheet protection is not carried over, "
+                                  "Import > Upload in Sheets). Only standard spreadsheet functions are used; sheet protection is not carried over, "
                                   "so take care not to type over the blue cells."]),
          ("Licence", [LICENCE])]))

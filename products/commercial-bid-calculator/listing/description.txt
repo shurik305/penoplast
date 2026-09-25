@@ -13,7 +13,7 @@ Area × frequency ÷ production rate (m² per cleaner-hour) → hours per week �
 • Bid Log — win rate, won monthly revenue, open pipeline, overdue follow-ups
 • Start Here — setup steps and bidding tips
 
-★ 12 AREA TYPES (rename or change them)
+★ 12 AREA TYPES (edit them in Settings)
 General office / open plan, private offices, meeting rooms, reception, corridors, stairwells, toilets/washrooms, kitchen/break room, retail floor, clinic/treatment rooms, warehouse/workshop, gym/changing rooms.
 
 ★ 8 PERIODIC SERVICES
@@ -31,21 +31,21 @@ Any currency and tax rate can be set in any edition.
 • Quick-Start Guide (PDF, 2 pages)
 
 ★ WORKS IN
-Microsoft Excel 2010 or newer (Windows and Mac), Microsoft 365, Google Sheets (upload the file to Google Drive), LibreOffice. No macros, no subscription, no sign-up.
+Made for Microsoft Excel (2013 or newer, Windows and Mac) and Microsoft 365 — standard formulas only, no macros, no subscription, no sign-up. Also opens in Google Sheets (upload the file to Google Drive; sheet protection isn't carried over) and LibreOffice.
 
 ★ GOOD TO KNOW
 • Default production rates and costs are realistic starting points — calibrate them with your own timings.
-• The proposal's contract clauses are editable text, not legal advice — have your own terms reviewed.
+• The proposal's contract clauses are editable text, not legal advice — fill in your own insurance details and have your own terms reviewed.
 • Calculated cells are protected without a password; unprotect any sheet to customise it.
 • This is a digital download — nothing will be shipped.
 
 ★ HOW IT WAS MADE
-{{MADE_BY}} All formulas were tested in all four editions.
+{{MADE_BY}} Every formula is checked automatically before release, in all four editions, with default values and 20+ edge cases (renamed area types, missing frequencies, VAT on/off, zero values).
 
 ★ LICENCE
 For use in your own business. Please don't resell, share or redistribute the files.
 
 ★ REFUNDS
-Because this is an instant digital download, returns and exchanges aren't accepted. The download starts immediately after purchase, so the right of withdrawal ends once it has started. If anything doesn't work, send us a message — we'll fix it or help you set it up.
+Returns and exchanges aren't accepted for instant downloads. If you buy from the EU or UK, your right of withdrawal for digital content ends once the download starts, provided you agreed to immediate delivery at checkout. If anything doesn't work, send us a message — we'll fix it or help you set it up.
 
-Questions? Send a message — we usually reply within 1–2 working days.
+Questions? Send us a message through Etsy.

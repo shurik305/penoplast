@@ -11,8 +11,8 @@ Made for small cleaning companies and self-employed cleaners in the UK, Ireland,
 • Quote Log — track every quote: win rate, open pipeline, overdue follow-ups
 • Start Here — 5-minute setup guide and pricing tips
 
-★ 7 SERVICE TYPES (rename or change them)
-Regular clean, deep clean, end of tenancy / move-out, after builders, office regular clean, office deep clean, short-let / Airbnb turnover. Each has a "what's included" checklist that prints on the quote.
+★ 7 SERVICE TYPES (edit them in Settings)
+Regular clean, deep clean, end of tenancy / move-out, after builders, office regular clean, office deep clean, short-let / holiday-let turnover. Each has a "what's included" checklist that prints on the quote.
 
 ★ 14 EXTRAS
 Inside oven, fridge/freezer, kitchen cupboards, interior windows, bed linen, ironing, laundry, balcony, blinds, wall spot-cleaning, pet hair, extra bathroom, carpet/upholstery, waste removal — time-based or fixed price.
@@ -29,21 +29,22 @@ Any currency and tax rate can be set in any edition.
 • Quick-Start Guide (PDF, 2 pages)
 
 ★ WORKS IN
-Microsoft Excel 2010 or newer (Windows and Mac), Microsoft 365, Google Sheets (upload the file to Google Drive), LibreOffice. No macros, no subscription, no sign-up.
+Made for Microsoft Excel (2013 or newer, Windows and Mac) and Microsoft 365 — standard formulas only, no macros, no subscription, no sign-up. Also opens in Google Sheets (upload the file to Google Drive; sheet protection isn't carried over) and LibreOffice.
 
 ★ GOOD TO KNOW
-• The default production rates (m² per cleaner-hour) and costs are realistic starting points — adjust them to your own timings and prices.
+• The default production rates (area per cleaner-hour) and costs are realistic starting points — adjust them to your own timings and prices.
 • Calculated cells are protected without a password so formulas aren't overwritten by accident; you can unprotect any sheet to customise it.
+• A status line tells you whether a quote meets your target margin, only covers your costs, or is below break-even.
 • This is a digital download — nothing will be shipped.
 • This tool does not give tax, legal or accounting advice.
 
 ★ HOW IT WAS MADE
-{{MADE_BY}} All formulas were tested in all four editions.
+{{MADE_BY}} Every formula is checked automatically before release, in all four editions, with default values and 20+ edge cases (renamed items, discounts, zero values, VAT on/off).
 
 ★ LICENCE
 For use in your own business. Please don't resell, share or redistribute the files.
 
 ★ REFUNDS
-Because this is an instant digital download, returns and exchanges aren't accepted. The download starts immediately after purchase, so the right of withdrawal ends once it has started. If anything doesn't work, send us a message — we'll fix it or help you set it up.
+Returns and exchanges aren't accepted for instant downloads. If you buy from the EU or UK, your right of withdrawal for digital content ends once the download starts, provided you agreed to immediate delivery at checkout. If anything doesn't work, send us a message — we'll fix it or help you set it up.
 
-Questions? Send a message — we usually reply within 1–2 working days.
+Questions? Send us a message through Etsy.

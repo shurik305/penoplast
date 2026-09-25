@@ -35,7 +35,8 @@ if __name__ == "__main__":
                                       "and any platform or payment fee. The table compares all properties."]),
          ("Restock and report", ["Restock List turns a quick cupboard count into a shopping list for the next "
                                  "stays. Use the Issue Report for damage or missing items the same day, with photos."]),
-         ("Using Google Sheets", ["Upload the .xlsx file to Google Drive and open it with Google Sheets. All "
-                                  "formulas work; sheet protection is not carried over, so take care with blue cells."]),
+         ("Using Google Sheets", ["Upload the .xlsx file to Google Drive and open it with Google Sheets. Only standard "
+                                  "spreadsheet functions are used; sheet protection is not carried over, so take care "
+                                  "with blue cells."]),
          ("Licence", ["Licensed for use in your own business. Please do not resell, share or redistribute the files. "
                       "This kit is independent and not affiliated with or endorsed by any booking platform."])]))

@@ -150,7 +150,7 @@ def build(outdir):
     s.freeze_panes(2, 0)
 
     def cons_per_stay(guests, baths, bedrooms):
-        return (f'SUMPRODUCT(ConsCost,ConsQty,(ConsScale="stay")+(ConsScale="guest")*{guests}+'
+        return (f'SUMPRODUCT(ConsCost,ConsQty,(ConsScale="stay")+(ConsScale="")+(ConsScale="guest")*{guests}+'
                 f'(ConsScale="bathroom")*{baths}+(ConsScale="bedroom")*MAX(1,{bedrooms}))')
 
     def lookup(rng, key):
@@ -175,6 +175,17 @@ def build(outdir):
     b.name("FMarkup", F, 6, 2)
     fc.write(7, 1, "Platform / payment fee taken from the cleaning fee", f["label"]); fc.write(7, 2, 0.03, f["in_pct"])
     b.name("FFee", F, 7, 2)
+    fc.data_validation(7, 2, 7, 2, {"validate": "decimal", "criteria": "between", "minimum": 0, "maximum": 0.5,
+                                    "error_message": "Use 0% to 50%."})
+    fc.data_validation(6, 2, 6, 2, {"validate": "decimal", "criteria": "between", "minimum": 0, "maximum": 3})
+    fc.data_validation(5, 2, 5, 2, {"validate": "integer", "criteria": "between", "minimum": 0, "maximum": 30})
+    # hidden checks: property still exists in Settings; consumables with an unknown "scales with" value
+    fc.set_column(10, 10, 8, None, {"hidden": True})
+    fc.write_formula(4, 10, "=ISNUMBER(MATCH(FProp,PropNames,0))")
+    b.name("FPropOK", F, 4, 10)
+    fc.write_formula(5, 10, '=SUMPRODUCT((ConsItems<>"")*(ConsScale<>"")*(ConsScale<>"stay")*(ConsScale<>"guest")'
+                            '*(ConsScale<>"bathroom")*(ConsScale<>"bedroom"))')
+    b.name("ConsBad", F, 5, 10)
     fc.merge_range(7, 3, 8, 7, "Enter the percentage your booking platform or payment provider deducts from the "
                                "cleaning fee (0% if none). Check your own platform's current host fees.", f["note"])
     b.section(fc, 10, "2. Turnover cost", 1, 3)
@@ -193,19 +204,29 @@ def build(outdir):
         b.name(nm, F, rr, 2)
         rr += 1
     fc.write_formula(rr, 1, '="Total turnover cost ("&CurrencyLabel&")"', f["label_b"])
-    fc.write_formula(rr, 2, "=FCleaner+FLaundry+FCons+FSupplies", f["c_num_b"])
+    fc.write_formula(rr, 2, "=IF(FPropOK,FCleaner+FLaundry+FCons+FSupplies,0)", f["c_num_b"])
     b.name("FTotal", F, rr, 2)
     rr += 2
     b.section(fc, rr, "3. Recommended cleaning fee", 1, 3); rr += 1
     fc.set_row(rr, 34)
     fc.write_formula(rr, 1, '="Cleaning fee to charge ("&CurrencyLabel&")"', f["big_label"])
-    fc.write_formula(rr, 2, "=IF(FTotal<=0,0,IF(RoundTo>0,CEILING(FTotal*(1+FMarkup)/(1-FFee),RoundTo),"
-                            "FTotal*(1+FMarkup)/(1-FFee)))", f["big"])
+    fee_row = rr
+    fc.write_formula(rr, 2, "=IF(FTotal<=0,0,IF(RoundTo>0,CEILING(FTotal*(1+FMarkup)/(1-MIN(MAX(FFee,0),0.9)),RoundTo),"
+                            "FTotal*(1+FMarkup)/(1-MIN(MAX(FFee,0),0.9))))", f["big"])
     b.name("FFeeOut", F, rr, 2)
     rr += 1
     fc.write(rr, 1, "What you keep after the fee and your costs", f["label"])
-    fc.write_formula(rr, 2, "=FFeeOut*(1-FFee)-FTotal", f["c_num"])
+    fc.write_formula(rr, 2, "=FFeeOut*(1-MIN(MAX(FFee,0),0.9))-FTotal", f["c_num"])
     b.name("FKeep", F, rr, 2)
+    fc.merge_range(fee_row, 3, rr, 7, "", f["status"])
+    fc.write_formula(fee_row, 3, '=IF(NOT(FPropOK),"⚠ Property not found in Settings — choose it again from the list.",'
+                                 'IF(ConsBad>0,"⚠ "&ConsBad&" consumable(s) have an unknown \'scales with\' value — use '
+                                 'stay, guest, bathroom or bedroom.",IF(FKeep<0,"⚠ This fee does not cover the '
+                                 'turnover cost.","✔ The fee covers the turnover cost and your mark-up.")))', f["status"])
+    fc.conditional_format(fee_row, 3, rr, 7, {"type": "formula", "criteria": f'=LEFT($D${fee_row + 1},1)="✔"',
+                                              "format": f["green"]})
+    fc.conditional_format(fee_row, 3, rr, 7, {"type": "formula", "criteria": f'=LEFT($D${fee_row + 1},1)="⚠"',
+                                              "format": f["red"]})
     rr += 2
     b.section(fc, rr, "All properties at a glance (typical number of guests)", 1, 8); rr += 1
     fc.write_row(rr, 1, ["Property", "Guests", "Cleaner", "Laundry", "Consumables", "Supplies", "Total cost",
@@ -229,8 +250,8 @@ def build(outdir):
         fc.write_formula(rr, 6, f'=IF({P}="","",SuppliesTurn)', f["c_num"])
         tot = f"SUM({cell(rr, 3)}:{cell(rr, 6)})"
         fc.write_formula(rr, 7, f'=IF({P}="","",{tot})', f["c_num_b"])
-        fc.write_formula(rr, 8, f'=IF({P}="","",IF(RoundTo>0,CEILING({tot}*(1+FMarkup)/(1-FFee),RoundTo),'
-                                f'{tot}*(1+FMarkup)/(1-FFee)))', f["c_num_b"])
+        fc.write_formula(rr, 8, f'=IF({P}="","",IF(RoundTo>0,CEILING({tot}*(1+FMarkup)/(1-MIN(MAX(FFee,0),0.9)),RoundTo),'
+                                f'{tot}*(1+FMarkup)/(1-MIN(MAX(FFee,0),0.9))))', f["c_num_b"])
         rr += 1
     fc.protect("", {"select_locked_cells": True, "select_unlocked_cells": True})
 
@@ -245,6 +266,9 @@ def build(outdir):
     rs.write("B2", "Count what's in the cupboard — see exactly what to buy before the next stays.", f["subtitle"])
     rs.write(3, 1, "Property", f["label"]); rs.merge_range(3, 2, 3, 3, PROPERTIES[0][0], f["in_text"])
     b.name("RProp", R, 3, 2)
+    rs.merge_range(3, 4, 3, 6, "", f["note"])
+    rs.write_formula(3, 4, '=IF(ISNUMBER(MATCH(RProp,PropNames,0)),"","⚠ Property not found in Settings — choose it again.")',
+                     f["overdue"])
     rs.data_validation(3, 2, 3, 2, {"validate": "list", "source": b.lst("PropNames")})
     rs.write(4, 1, "Stock up for how many stays?", f["label"]); rs.write(4, 2, 4, f["in_int"])
     b.name("RStays", R, 4, 2)
@@ -291,7 +315,9 @@ def build(outdir):
              ("Average minutes", f'=IFERROR(AVERAGE({rg(6)}),0)', "tile_val", (4, 5)),
              ("Cleaner pay (all)", f"=SUM({rg(9)})", "tile_money", (6, 7)),
              ("Unpaid", f'=SUMIF({rg(10)},"No",{rg(9)})', "tile_money", (8, 9)),
-             ("Issues reported", f'=COUNTIF({rg(8)},"Yes")', "tile_val", (10, 11))]
+             ("Issues reported", f'=COUNTIF({rg(8)},"Yes")', "tile_val", (10, 10)),
+             ("Rows to check", f'=SUMPRODUCT(({rg(2)}<>"")*ISNA(MATCH({rg(2)},PropNames,0)))+COUNTIF({rg(6)},">720")',
+              "tile_val", (11, 11))]
     for lab, fml, fk, (a, z) in tiles:
         if a == z:
             lg.write(3, a, lab, f["tile_label"]); lg.write_formula(4, a, fml, f[fk])
@@ -325,7 +351,7 @@ def build(outdir):
             lg.write_blank(rr, 4, None, f_time)
             lg.write_blank(rr, 5, None, f_time)
         E, Fc, C = cell(rr, 4), cell(rr, 5), cell(rr, 2)
-        lg.write_formula(rr, 6, f'=IF(AND(N({E})>0,N({Fc})>0),ROUND(MOD({Fc}-{E},1)*1440,0),"")', f_min)
+        lg.write_formula(rr, 6, f'=IF(AND(ISNUMBER({E}),ISNUMBER({Fc})),ROUND(MOD({Fc}-{E},1)*1440,0),"")', f_min)
         lg.write_formula(rr, 9, f'=IF({C}="","",IFERROR(IF(N(INDEX(PropFixed,MATCH({C},PropNames,0)))>0,'
                                 f'INDEX(PropFixed,MATCH({C},PropNames,0)),N(INDEX(PropHourly,MATCH({C},PropNames,0)))*'
                                 f'IF(N({cell(rr, 6)})>0,{cell(rr, 6)},N(INDEX(PropMinutes,MATCH({C},PropNames,0))))/60)'
@@ -334,6 +360,10 @@ def build(outdir):
     lg.data_validation(first, 8, lastr, 8, {"validate": "list", "source": ["Yes", "No"]})
     lg.data_validation(first, 10, lastr, 10, {"validate": "list", "source": ["Yes", "No"]})
     lg.conditional_format(first, 8, lastr, 8, {"type": "cell", "criteria": "==", "value": '"Yes"', "format": f["red"]})
+    lg.conditional_format(first, 2, lastr, 2, {"type": "formula", "criteria": f'=AND($C{first + 1}<>"",'
+                                                                           f'ISNA(MATCH($C{first + 1},PropNames,0)))',
+                                               "format": f["red"]})
+    lg.conditional_format(first, 6, lastr, 6, {"type": "cell", "criteria": ">", "value": 720, "format": f["red"]})
     lg.conditional_format(first, 10, lastr, 10, {"type": "cell", "criteria": "==", "value": '"No"',
                                                  "format": f["amber"]})
     lg.freeze_panes(first, 0)

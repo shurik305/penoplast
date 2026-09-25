@@ -1,7 +1,6 @@
 # STATE — точка продовження для агента
 
-Оновлено: 2026-09-25 (сесія 3). Гілка: `claude/peaceful-gates-emn8g8`.
-Наступне автоматичне продовження: див. кінець файлу.
+Оновлено: 2026-09-25 (сесія 4, прожарка №1). Гілка: `claude/peaceful-gates-emn8g8`.
 
 ## Місія
 Довести хоча б одну бізнес-модель до реальної оплати, потім оптимізувати прибуток. Бюджет 0 DKK без дозволу.
@@ -9,44 +8,40 @@
 
 ## Поточний експеримент
 EXP-001 — цифрові інструменти для клінінгових бізнесів на Etsy (experiments/EXP-001-etsy-cleaning-templates.md).
-- Продукт №1 "Cleaning Price & Quote Calculator" — ГОТОВИЙ (4 xlsx + PDF, 8 зображень, опис, теги).
-- Продукт №2 "Commercial Cleaning Bid Calculator" — ГОТОВИЙ (products/commercial-bid-calculator, 7 зображень).
-- Продукт №3 "Short-Let Turnover Kit" — ГОТОВИЙ (products/shortlet-turnover-kit: xlsx + 2 друковані PDF).
-- Спільні модулі: products/_lib (xlsxkit, qakit, mockkit, guidekit) — використовувати для нових продуктів.
-- ВИРОБНИЦТВО НОВИХ ПРОДУКТІВ ПРИЗУПИНЕНО до перших даних з Etsy (перегляди/продажі).
-- Статус: чекаємо рішень/налаштувань власника (ops/OWNER_ACTIONS.md: A1–A6, B1–B5).
+- Продукти №1 (калькулятор цін), №2 (калькулятор тендерів), №3 (набір для короткострокової оренди) — ГОТОВІ,
+  пройшли прожарку №1: QA + 64 перевірки граничних випадків (edge_cases.py).
+- Набір для ручного завантаження: `_upload_kit/etsy-upload-kit.zip` (не комітиться; відтворюється `tools/release.py`).
+- ВИРОБНИЦТВО НОВИХ ПРОДУКТІВ ПРИЗУПИНЕНО до перших даних з Etsy.
+- Статус: чекаємо власника — M1 "ТАК", M2 ручне завантаження продукту №1, M3 приватний репозиторій
+  (ops/OWNER_ACTIONS.md). Поки власник не відповів, нової роботи над EXP-001 не робити.
 
 ## Відновлення середовища (свіжий контейнер)
 ```bash
-source ops/setup.sh                       # pip-пакети, LibreOffice Calc, профіль з перерахунком формул
-cd products/pricing-calculator
-python3 build.py dist && python3 qa.py dist            # збірка + QA (має бути без PROBLEM)
-python3 mockups.py dist listing/images                  # зображення лістингу (+ listing/raw/)
-python3 guide.py listing/raw/quote-calculator.png dist/Quick-Start-Guide.pdf
-cd ../commercial-bid-calculator
-python3 build.py dist && python3 qa.py dist && python3 mockups.py dist listing/images
-python3 guide.py listing/raw/bid-calculator-1.png dist/Quick-Start-Guide.pdf
-cd ../shortlet-turnover-kit
-python3 build.py dist && python3 printables.py dist && python3 qa.py dist && python3 mockups.py dist listing/images
-python3 guide.py listing/raw/cleaning-fee-calculator-1.png dist/Quick-Start-Guide.pdf
+source ops/setup.sh          # pip-пакети, LibreOffice Calc, профіль з перерахунком формул
+python3 tools/release.py     # усі продукти: збірка → кеш значень → QA → граничні випадки → фото → PDF → набір
 ```
-Файли `dist/` і `listing/raw/` не комітяться (репозиторій був публічним) — відтворюються з коду.
+Має закінчитися рядком `RELEASE OK`. Файли `dist/`, `listing/raw/`, `_upload_kit/` не комітяться.
+Для нового продукту: спільні модулі products/_lib (xlsxkit, qakit, casekit, cachefill, mockkit, guidekit),
+обов'язково qa.py + edge_cases.py, додати продукт у tools/release.py і tools/make_upload_kit.py.
 
 ## Наступні дії (по черзі)
-1. Перевірити, чи власник відповів (чат; Gmail — лише листи від власника/Etsy). Оновити OWNER_ACTIONS.md.
-2. Якщо є `ETSY_KEYSTRING` + `ETSY_REFRESH_TOKEN` і мережа до openapi.etsy.com:
-   `python3 tools/etsy_api.py me` → `taxonomy templates` → `publish products/pricing-calculator/listing/listing.json --made-by "<варіант A3>"`.
-   Записати listing_id і дату в EXP-001; витрату $0.20 — у LEDGER (Expenses) лише після підтвердження дозволу A1.
-3. Продукти №1–3 готові. Нових продуктів не будувати, доки немає даних про попит з Etsy.
-   Публікувати: №1, №2, №3 (+ за потреби регіональні варіанти назв для №1 — у межах A1, ≤15 лістингів).
-4. Після публікації: щотижня `tools/etsy_api.py listings` (перегляди/обране) і `receipts` (продажі) → EXP-001 метрики.
-   Критерії: ≥100 переглядів за 14 днів; ≥1 продаж за 30 днів; стоп-правила — в EXP-001.
-5. Другий трек (після мережі Full + акаунта Apify): research/apify-store.md.
+1. Коли власник відповів: оновити OWNER_ACTIONS.md і JOURNAL.md.
+   - "ТАК" → витрати до $3 дозволені: кожен $0.20 записувати в LEDGER лише після підтвердження публікації.
+   - Посилання на лістинг → T0 = дата публікації; записати listing_id у EXP-001.
+2. Після T0: перевіряти Gmail лише на листи Etsy ("You made a sale", повідомлення покупців) і від власника.
+   Метрики переглядів — скріншоти Etsy Stats від власника на T0+7/14/21 (M4). Рішення за критеріями EXP-001.
+3. Якщо Q1/Q2 від власника: записати результат у EXP-001 (гіпотеза "метричної прогалини"; сумісність з Google Sheets).
+   Q2 провалено → виправити продукти і перезібрати перед публікацією.
+4. Прожарка №2 (`/roast`): T0+14 або перед будь-яким новим продуктом/каналом/витратою (ops/ROASTS.md).
+5. Якщо S1 = "так, є вільні потужності" → підготувати план EXP-002 (локальне SEO для Hutsol) і попросити дозвіл.
+6. Etsy API (tools/etsy_api.py) — лише після перших продажів і налаштувань власника (мережа Full + змінні середовища).
 
 ## Відомі обмеження
-- Мережа "trusted": лише GitHub/npm/PyPI; WebFetch заблокований; WebSearch працює.
+- Мережа "trusted": лише GitHub/npm/PyPI; WebFetch заблокований; WebSearch працює (факти з нього — SOURCED).
+- Репозиторій публічний, доки власник не виконав M3: жодних особистих даних і платних файлів у комітах.
 - Не просити власника вставляти токени в чат; секрети — лише як змінні середовища.
 - Холодні email/DM у Данії заборонені (Markedsføringsloven §10) — лише вхідні канали.
 
 ## Розклад
-- Наступна перевірка: 2026-09-26 06:16 UTC (send_later, trig_01CJSg9t1DaTwYtpiCD5Zw8t); далі раз на добу, поки все чекає на власника.
+- Автоматичних перевірок немає: щоденну перевірку скасовано після прожарки №1 (витрачала ліміт, поки все чекає на
+  власника). Робота відновлюється з наступним повідомленням власника. Після T0 — одна перевірка на тиждень.

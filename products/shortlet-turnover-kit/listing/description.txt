@@ -17,7 +17,7 @@ For hosts and co-hosts of holiday lets, serviced apartments and short-term renta
 • Quick-Start Guide (PDF)
 
 ★ WORKS IN
-Microsoft Excel 2010 or newer (Windows and Mac), Microsoft 365, Google Sheets (upload the file to Google Drive), LibreOffice. Any currency. No macros, no subscription, no sign-up.
+Made for Microsoft Excel (2013 or newer, Windows and Mac) and Microsoft 365 — standard formulas only, any currency, no macros, no subscription, no sign-up. Also opens in Google Sheets (upload the file to Google Drive; sheet protection isn't carried over) and LibreOffice.
 
 ★ GOOD TO KNOW
 • Default costs are examples — enter your own pay rates, laundry and consumable prices.
@@ -26,12 +26,12 @@ Microsoft Excel 2010 or newer (Windows and Mac), Microsoft 365, Google Sheets (u
 • This is a digital download — nothing will be shipped.
 
 ★ HOW IT WAS MADE
-{{MADE_BY}} All formulas were tested before release.
+{{MADE_BY}} Every formula is checked automatically before release, with default values and edge cases (renamed properties, midnight start times, unusual fees).
 
 ★ LICENCE
 For use in your own business. Please don't resell, share or redistribute the files.
 
 ★ REFUNDS
-Because this is an instant digital download, returns and exchanges aren't accepted. The download starts immediately after purchase, so the right of withdrawal ends once it has started. If anything doesn't work, send us a message — we'll fix it or help you set it up.
+Returns and exchanges aren't accepted for instant downloads. If you buy from the EU or UK, your right of withdrawal for digital content ends once the download starts, provided you agreed to immediate delivery at checkout. If anything doesn't work, send us a message — we'll fix it or help you set it up.
 
-Questions? Send a message — we usually reply within 1–2 working days.
+Questions? Send us a message through Etsy.

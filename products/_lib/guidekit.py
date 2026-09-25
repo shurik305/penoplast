@@ -99,7 +99,7 @@ def build(out, product, title_lines, intro, shot, files, steps, sections):
         y = _heading(c, hd, y - 6, 18) - 4
         for ptxt in paras:
             y = _para(c, ptxt, M, y, PW - 2 * M) - 6
-    _para(c, "Questions or suggestions? Message us through Etsy — we usually reply within 1–2 working days.",
+    _para(c, "Questions or suggestions? Message us through Etsy.",
           M, y - 4, PW - 2 * M, font="Inter600", color=BLUE)
     _footer(c, product, 2)
     c.save()

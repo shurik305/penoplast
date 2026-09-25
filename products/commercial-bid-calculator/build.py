@@ -86,26 +86,26 @@ PRESETS = {
                  "Harbourside Accountants Ltd", "James Carter", "Unit 4, Temple Quay, Bristol BS1",
                  "james.carter@example.com", "Weekdays after 17:30",
                  "Invoiced monthly in advance; payment within 14 days by bank transfer.", "Sparkle & Co Cleaning",
-                 "0117 496 0123 · hello@sparkleco.co.uk", "www.sparkleco.co.uk", "Bristol and surrounding areas",
+                 "0117 496 0123 · hello@example.com", "www.example.com", "Bristol and surrounding areas",
                  [("Toilet paper & hand towels", 38), ("Hand soap & sanitiser", 12), ("Bin liners", 9)]),
     "EU": preset("EUR", "VAT", 0.21, "Yes", "m²", 14.00, 0.25, 0.90, 2.80, 280, 35, "EU & Ireland edition (EUR, VAT)",
                  "Van Dijk Architecten B.V.", "Sanne van Dijk", "Maliebaan 45, Utrecht", "sanne@example.com",
                  "Weekdays after 18:00", "Invoiced monthly in advance; payment within 14 days.",
-                 "Clean Point Services", "+31 30 123 4567 · info@cleanpoint.eu", "www.cleanpoint.eu",
+                 "Clean Point Services", "+31 20 000 0000 · info@example.com", "www.example.com",
                  "Utrecht and surrounding area",
                  [("Toilet paper & hand towels", 42), ("Hand soap & sanitiser", 14), ("Bin liners", 10)]),
     "AU": preset("AUD", "GST", 0.10, "Yes", "m²", 31.00, 0.15, 1.50, 4.50, 500, 60,
                  "Australia & NZ edition (AUD, GST)", "Coastline Physio Pty Ltd", "Olivia Brown",
                  "22 Hunter Street, Newcastle NSW", "olivia@example.com", "Weekdays after 18:00",
                  "Invoiced monthly in advance; payment within 14 days.", "Harbour Clean Co",
-                 "02 4900 1234 · hello@harbourclean.com.au", "www.harbourclean.com.au",
+                 "02 5550 1234 · hello@example.com", "www.example.com",
                  "Newcastle and Lake Macquarie",
                  [("Toilet paper & hand towels", 70), ("Hand soap & sanitiser", 22), ("Bin liners", 16)]),
     "US": preset("USD", "Sales tax", 0.0, "No", "sq ft", 17.00, 0.15, 1.00, 3.00, 400, 45,
                  "US & Canada edition (USD, sq ft)", "Oakridge Dental Group", "Dr. Maria Lopez",
                  "8200 Oakridge Blvd, Austin TX", "maria@example.com", "Weekdays after 6 pm",
                  "Invoiced monthly in advance; payment due within 15 days (Net 15).", "Bright Commercial Cleaning",
-                 "(555) 010-2030 · bids@brightclean.co", "www.brightclean.co", "Austin, TX and nearby",
+                 "(555) 010-2030 · bids@example.com", "www.example.com", "Austin, TX and nearby",
                  [("Toilet paper & paper towels", 55), ("Hand soap & sanitizer", 18), ("Trash liners", 12)]),
 }
 
@@ -173,12 +173,14 @@ def build(key, outdir):
     setting("Supplies", "Cleaning supplies per labour hour", p["supplies"], f["in_num"])
     setting("Overhead", "Overheads per labour hour", p["overhead"], f["in_num"],
             "Use the Break-even sheet to calculate it from your real monthly costs.")
+    s.data_validation(r, 2, r, 2, {"validate": "decimal", "criteria": "between", "minimum": 0, "maximum": 0.95,
+                                   "error_message": "Use 0% to 95%."})
     setting("Margin", "Target profit margin (% of the net fee)", p["margin"], f["in_pct"],
             "Commercial contracts often run at 10–20%.")
     setting("CostPerHr", "Total cost per labour hour (calculated)", "=LabourCost+Supplies+Overhead", f["c_num"],
             formula=True)
     setting("RatePerHr", "Your price per labour hour at target margin (calculated)",
-            "=IF(Margin<1,CostPerHr/(1-Margin),CostPerHr)", f["c_num_b"], formula=True)
+            "=CostPerHr/(1-MIN(MAX(Margin,0),0.95))", f["c_num_b"], formula=True)
     r += 1
     b.section(s, r, "Contract terms (printed on the proposal)", 1, 4); r += 1
     setting("MinMonthly", f"Minimum monthly fee (excl. {tax})", p["min_monthly"], f["in_num"])
@@ -188,26 +190,29 @@ def build(key, outdir):
     setting("Notice", "Notice period", "3 months' written notice", f["in_text"])
     setting("PriceReview", "Price review clause", "Prices are reviewed once a year in line with wage and cost "
                                                   "increases.", f["in_text"])
-    setting("Insurance", "Insurance statement", "Public and employer's liability insurance certificates are "
-                                                "available on request.", f["in_text"])
+    setting("Insurance", "Insurance statement", "[Describe your insurance cover here — edit this text in Settings.]",
+            f["in_text"], "Printed on the proposal. Only state cover you actually hold.")
     setting("Access", "Keys and access", "Keys and alarm codes are held securely and their use is logged.",
             f["in_text"])
     r += 1
     b.section(s, r, "Area types and production rates  —  calibrate with your own timings!", 1, 4); r += 1
-    s.write_row(r, 1, ["Area type (rename freely)", "m² per cleaner-hour"], f["th"])
+    s.write(r, 1, "Area type", f["th"])
+    s.write_formula(r, 2, '="Area per cleaner-hour ("&AreaUnit&")"', f["th"])
     s.merge_range(r, 3, r, 4, "Tasks each visit (printed in the scope of work)", f["th"]); r += 1
     a0 = r
     for nm_, rate, scope in AREA_TYPES:
         s.write(r, 1, nm_, f["in_text"])
-        s.write(r, 2, rate, f["in_num0"])
+        s.write(r, 2, rate if p["area"] == "m²" else round(rate * SQFT / 5) * 5, f["in_num0"])
         s.merge_range(r, 3, r, 4, scope, f["in_wrap"])
         s.set_row(r, 42)
         r += 1
     b.name("AreaNames", S, a0, 1, r - 1, 1)
     b.name("AreaRates", S, a0, 2, r - 1, 2)
     b.name("AreaScopes", S, a0, 3, r - 1, 3)
-    s.merge_range(r, 1, r, 4, "Rates are m² of floor a cleaner finishes per hour for routine cleaning at normal "
-                              "traffic. Example: 220 m² of open-plan office ÷ 250 = 0.9 hours per visit.", f["note"])
+    s.merge_range(r, 1, r, 4, "Rates are the floor area (in your area unit) a cleaner finishes per hour for routine "
+                              "cleaning at normal traffic, e.g. 220 m² of open-plan office ÷ 250 = 0.9 hours per visit. "
+                              "Renamed a type? Choose it again on Bid Calculator — it warns you about names that don't "
+                              "match.", f["note"])
     s.set_row(r, 26)
     r += 2
     b.section(s, r, "Frequencies", 1, 4); r += 1
@@ -227,11 +232,12 @@ def build(key, outdir):
     b.name("TrafficMults", S, t0, 2, r - 1, 2)
     r += 1
     b.section(s, r, "Periodic services", 1, 4); r += 1
-    s.write_row(r, 1, ["Service (rename freely)", "Unit: area or each", "Rate", "Rate means…"], f["th"]); r += 1
+    s.write_row(r, 1, ["Service", "Unit: area or each", "Rate", "Rate means…"], f["th"]); r += 1
     p0 = r
     for nm_, unit, rate, _ in PERIODIC:
-        s.write(r, 1, nm_, f["in_text"]); s.write(r, 2, unit, f["in_text"]); s.write(r, 3, rate, f["in_num0"])
-        s.write_formula(r, 4, f'=IF({cell(r, 2)}="each","minutes per item","m² per cleaner-hour")', f["note"])
+        s.write(r, 1, nm_, f["in_text"]); s.write(r, 2, unit, f["in_text"])
+        s.write(r, 3, rate if unit == "each" or p["area"] == "m²" else round(rate * SQFT / 5) * 5, f["in_num0"])
+        s.write_formula(r, 4, f'=IF({cell(r, 2)}="each","minutes per item",AreaUnit&" per cleaner-hour")', f["note"])
         r += 1
     b.name("PerNames", S, p0, 1, r - 1, 1)
     b.name("PerUnits", S, p0, 2, r - 1, 2)
@@ -279,13 +285,17 @@ def build(key, outdir):
         q.write(rr, 3, fr, f["in_text"]); q.write(rr, 4, tr, f["in_text"])
         B_, C_, D_, E_, F_, G_ = (cell(rr, c_) for c_ in range(1, 7))
         q.write_formula(rr, 5, f'=IF({B_}="","",IFERROR(INDEX(FreqVisits,MATCH({D_},FreqNames,0)),0))', f["c_dec2"])
-        q.write_formula(rr, 6, f'=IF(OR({B_}="",N({C_})=0),"",IFERROR(N({C_})/IF(AreaUnit="sq ft",{SQFT},1)/'
+        q.write_formula(rr, 6, f'=IF(OR({B_}="",N({C_})=0),"",IFERROR(N({C_})/'
                                f'INDEX(AreaRates,MATCH({B_},AreaNames,0))*IFERROR(INDEX(TrafficMults,'
                                f'MATCH({E_},TrafficNames,0)),1),""))', f["c_dec2"])
         q.write_formula(rr, 7, f'=IF({G_}="","",{G_}*N({F_}))', f["c_dec2"])
+        q.write_formula(rr, 13, f'=IF({B_}="",IF(N({C_})<>0,1,0),IF(AND(ISNUMBER(MATCH({B_},AreaNames,0)),'
+                                f'ISNUMBER(MATCH({D_},FreqNames,0)),N({C_})>0,OR({E_}="",ISNUMBER(MATCH({E_},'
+                                f'TrafficNames,0)))),0,1))')
     tot = ar1 + 1
     q.write(tot, 1, "Total", f["label_b"])
-    q.write_formula(tot, 2, f"=SUM({cell(ar0, 2)}:{cell(ar1, 2)})", f["c_num0"])
+    q.write_formula(tot, 2, f'=SUMPRODUCT(--({cell(ar0, 6)}:{cell(ar1, 6)}<>""),{cell(ar0, 2)}:{cell(ar1, 2)})',
+                    f["c_num0"])
     b.name("TotalArea", Q, tot, 2)
     q.write_formula(tot, 7, f"=SUM({cell(ar0, 7)}:{cell(ar1, 7)})", f["c_num_b"])
     b.name("RoutineHrsWeek", Q, tot, 7)
@@ -294,6 +304,7 @@ def build(key, outdir):
     q.write_formula(tot, 6, f'=SUMIF({cell(ar0, 5)}:{cell(ar1, 5)},">=1",{cell(ar0, 6)}:{cell(ar1, 6)})', f["c_dec2"])
     b.name("BusiestVisit", Q, tot, 6)
     q.data_validation(ar0, 1, ar1, 1, {"validate": "list", "source": b.lst("AreaNames")})
+    q.data_validation(ar0, 2, ar1, 2, {"validate": "decimal", "criteria": ">=", "value": 0})
     q.data_validation(ar0, 3, ar1, 3, {"validate": "list", "source": b.lst("FreqNames")})
     q.data_validation(ar0, 4, ar1, 4, {"validate": "list", "source": b.lst("TrafficNames")})
 
@@ -307,18 +318,25 @@ def build(key, outdir):
         q.write_formula(rr, 3, f'=IF({B_}="","",IF(IFERROR(INDEX(PerUnits,MATCH({B_},PerNames,0)),"")="each",'
                                f'"each",AreaUnit))', f["c_text"])
         q.write_formula(rr, 5, f'=IF(OR({B_}="",N({C_})=0,N({E_})=0),"",IFERROR(IF({D_}="each",'
-                               f'N({C_})*INDEX(PerRates,MATCH({B_},PerNames,0))/60,N({C_})/IF(AreaUnit="sq ft",'
-                               f'{SQFT},1)/INDEX(PerRates,MATCH({B_},PerNames,0)))*N({E_}),""))', f["c_dec1"])
+                               f'N({C_})*INDEX(PerRates,MATCH({B_},PerNames,0))/60,N({C_})/'
+                               f'INDEX(PerRates,MATCH({B_},PerNames,0)))*N({E_}),""))', f["c_dec1"])
         q.write_formula(rr, 6, f'=IF({F_}="","",{F_}/12)', f["c_dec2"])
+        q.write_formula(rr, 13, f'=IF({B_}="",IF(OR(N({C_})<>0,N({E_})<>0),1,0),IF(AND(ISNUMBER(MATCH({B_},PerNames,0)),'
+                                f'N({C_})>0,N({E_})>0),0,1))')
     q.write(pr1 + 1, 1, "Total", f["label_b"])
     q.write_formula(pr1 + 1, 6, f"=SUM({cell(pr0, 6)}:{cell(pr1, 6)})", f["c_num_b"])
     b.name("PeriodicHrsMonth", Q, pr1 + 1, 6)
     q.data_validation(pr0, 1, pr1, 1, {"validate": "list", "source": b.lst("PerNames")})
-    per_list = "&".join(f'IF(AND({cell(rr, 1)}<>"",N({cell(rr, 2)})>0,N({cell(rr, 4)})>0),{cell(rr, 1)}&" — "'
-                        f'&TEXT({cell(rr, 2)},"#,##0")&" "&{cell(rr, 3)}&", "&{cell(rr, 4)}&"× per year; ","")'
+    q.data_validation(pr0, 2, pr1, 2, {"validate": "decimal", "criteria": ">=", "value": 0})
+    q.data_validation(pr0, 4, pr1, 4, {"validate": "decimal", "criteria": ">=", "value": 0})
+    per_list = "&".join(f'IF(AND({cell(rr, 1)}<>"",N({cell(rr, 2)})>0,N({cell(rr, 4)})>0,ISNUMBER(MATCH('
+                        f'{cell(rr, 1)},PerNames,0))),{cell(rr, 1)}&" — "&FIXED({cell(rr, 2)},0)&" "&{cell(rr, 3)}'
+                        f'&", "&{cell(rr, 4)}&"× per year; ","")'
                         for rr in range(pr0, pr1 + 1))
     # helper text for the proposal lives in hidden column M
-    q.set_column(12, 12, 30, None, {"hidden": True})
+    q.set_column(12, 13, 30, None, {"hidden": True})
+    q.write_formula(pr0 + 3, 12, f"=SUM({cell(ar0, 13)}:{cell(ar1, 13)})+SUM({cell(pr0, 13)}:{cell(pr1, 13)})")
+    b.name("LinesBad", Q, pr0 + 3, 12)
     q.write_formula(pr0, 12, "=" + per_list)
     q.write_formula(pr0 + 1, 12, f'=IF({cell(pr0, 12)}="","None",LEFT({cell(pr0, 12)},LEN({cell(pr0, 12)})-2))')
     b.name("PeriodicList", Q, pr0 + 1, 12)
@@ -351,7 +369,7 @@ def build(key, outdir):
     wrow(32, "SupHrs", "Supervision & quality checks", "=(RoutineHrsMonth+PerHrs)*Supervision", f["c_dec1"])
     wrow(33, "TotalHrsMonth", "Total labour hours per month", "=RoutineHrsMonth+PerHrs+SupHrs", f["c_dec1"])
     wrow(34, "CostMonth", "Cost: labour + supplies + overheads", "=TotalHrsMonth*CostPerHr", f["c_num"])
-    wrow(35, "PriceMargin", "Price at your target margin", "=IF(Margin<1,CostMonth/(1-Margin),CostMonth)", f["c_num"])
+    wrow(35, "PriceMargin", "Price at your target margin", "=CostMonth/(1-MIN(MAX(Margin,0),0.95))", f["c_num"])
     wrow(36, "ConsPrice0", '="Consumables incl. "&TEXT(ConsMarkup,"0%")&" handling"', "=ConsCost*(1+ConsMarkup)",
          f["c_num"], label_formula=True)
     wrow(37, "Subtotal0", "Subtotal", "=PriceMargin+ConsPrice0", f["c_num"])
@@ -360,14 +378,14 @@ def build(key, outdir):
          '=IF(AfterMin<=0,0,IF(InclVAT="Yes",IF(RoundTo>0,CEILING(AfterMin*(1+VATUsed),RoundTo),'
          'AfterMin*(1+VATUsed))/(1+VATUsed),IF(RoundTo>0,CEILING(AfterMin,RoundTo),AfterMin)))', f["c_num_b"])
     wrow(40, "PeriodicPrice", "Periodic services share (for the proposal)",
-         "=ROUND(PerHrs*(1+Supervision)*CostPerHr/(1-Margin),2)", f["c_num"])
+         "=ROUND(PerHrs*(1+Supervision)*CostPerHr/(1-MIN(MAX(Margin,0),0.95)),2)", f["c_num"])
     wrow(41, "ConsPrice", "Consumables share (for the proposal)", "=ROUND(ConsPrice0,2)", f["c_num"])
 
     q.merge_range(3, 9, 3, 10, "Monthly fee", f["section"])
     q.set_row(4, 34)
-    q.write_formula(4, 9, f'="Monthly fee ("&IF(AND(InclVAT="Yes",VATUsed>0),"incl. {tax}","excl. {tax}")&", "'
+    q.write_formula(4, 9, f'="Monthly fee ("&IF(VATUsed=0,"no {tax}",IF(InclVAT="Yes","incl. {tax}","excl. {tax}"))&", "'
                           f'&CurrencyLabel&")"', f["big_label"])
-    q.write_formula(5, 9, '="Based on "&TEXT(RoutineHrsWeek,"0.0")&" cleaning hours per week"', f["note"])
+    q.write_formula(5, 9, '="Based on "&FIXED(RoutineHrsWeek,1)&" cleaning hours per week"', f["note"])
     q.write(6, 9, f"Net monthly fee (excl. {tax})", f["label"])
     q.write_formula(6, 10, "=ROUND(FinalNet,2)", f["c_num"])
     b.name("NetMonthly", Q, 6, 10)
@@ -389,7 +407,7 @@ def build(key, outdir):
     q.write_formula(13, 10, "=TotalHrsMonth", f["c_dec1"])
     q.write(14, 9, "Busiest visit: all daily/weekly areas (hours)", f["label"])
     q.write_formula(14, 10, "=BusiestVisit", f["c_dec1"])
-    q.write_formula(15, 9, '="Cleaners needed for a "&TEXT(QWindow,"0.0")&"-hour window"', f["label"])
+    q.write_formula(15, 9, '="Cleaners needed for a "&FIXED(QWindow,1)&"-hour window"', f["label"])
     q.write_formula(15, 10, '=IF(N(QWindow)>0,MAX(1,ROUNDUP(BusiestVisit/QWindow,0)),"")', f["c_num0"])
     b.name("Cleaners", Q, 15, 10)
     q.write_formula(16, 9, f'="Price per "&AreaUnit&" per month (excl. {tax})"', f["label"])
@@ -410,13 +428,19 @@ def build(key, outdir):
     b.name("ProfitMonth", Q, 23, 10)
     q.write(24, 9, "Profit margin", f["label"])
     q.write_formula(24, 10, "=IF(FinalNet>0,ProfitMonth/FinalNet,0)", f["c_pct"])
+    b.name("BidMargin", Q, 24, 10)
     q.merge_range(25, 9, 27, 10, "", f["status"])
-    q.write_formula(25, 9, '=IF(TotalArea=0,"Add the areas to clean (type, size and frequency).",IF(RoutineHrsWeek=0,'
-                           '"Choose an area type and frequency for each area.",IF(EffRate<BERate,"⚠ Below your '
-                           'break-even rate of "&TEXT(BERate,"0.00")&" per labour hour — check the Break-even sheet.",'
-                           '"✔ This fee covers your costs and your target margin.")))', f["status"])
+    q.write_formula(25, 9, '=IF(LinesBad>0,"⚠ "&LinesBad&" line(s) not priced: a name no longer matches Settings, or '
+                           'the type, size, frequency or times per year is missing. Choose them again.",'
+                           'IF(TotalArea=0,"Add the areas to clean (type, size and frequency).",'
+                           'IF(EffRate<BERate,"⚠ Below your break-even rate of "&FIXED(BERate,2)&" per labour hour — '
+                           'check the Break-even sheet.",'
+                           'IF(BidMargin<MIN(MAX(Margin,0),0.95)-0.005,"△ Covers your costs, but the margin is "'
+                           '&TEXT(BidMargin,"0%")&" — below your "&TEXT(Margin,"0%")&" target (minimum fee or '
+                           'rounding?).","✔ Meets your target margin ("&TEXT(BidMargin,"0%")&")."))))', f["status"])
     q.conditional_format(25, 9, 27, 10, {"type": "formula", "criteria": '=LEFT($J$26,1)="✔"', "format": f["green"]})
     q.conditional_format(25, 9, 27, 10, {"type": "formula", "criteria": '=LEFT($J$26,1)="⚠"', "format": f["red"]})
+    q.conditional_format(25, 9, 27, 10, {"type": "formula", "criteria": '=LEFT($J$26,1)="△"', "format": f["amber"]})
     q.freeze_panes(3, 0)
     q.protect("", {"select_locked_cells": True, "select_unlocked_cells": True})
 
@@ -442,10 +466,11 @@ def build(key, outdir):
     cp.write_formula(9, 1, "=QEmail", f["label"])
     cp.set_row(11, 30)
     cp.merge_range(11, 1, 11, 4, "", f["q_desc"])
-    cp.write_formula(11, 1, '="Commercial cleaning — "&TEXT(TotalArea,"#,##0")&" "&AreaUnit&", about "'
-                            '&TEXT(RoutineHrsWeek,"0.0")&" cleaning hours per week"', f["q_desc"])
+    cp.write_formula(11, 1, '="Commercial cleaning — "&FIXED(TotalArea,0)&" "&AreaUnit&", about "'
+                            '&FIXED(RoutineHrsWeek,1)&" cleaning hours per week"', f["q_desc"])
     cp.merge_range(12, 1, 12, 4, "", f["q_small"])
-    cp.write_formula(12, 1, '="Cleaning time: "&QTime&" · Team of "&Cleaners&" · Contract: "&ContractTerm', f["q_small"])
+    cp.write_formula(12, 1, '="Cleaning time: "&QTime&IF(N(Cleaners)>0," · Team of "&Cleaners,"")&" · Contract: "'
+                            '&ContractTerm', f["q_small"])
     cp.write(14, 1, "Area", f["q_th"])
     cp.write_formula(14, 2, '="Size ("&AreaUnit&")"', f["q_th_c"])
     cp.write(14, 3, "Frequency", f["q_th"])
@@ -457,7 +482,8 @@ def build(key, outdir):
         cp.write_formula(rr, 1, f'=IF({B_}="","",{B_})', f["q_row"])
         cp.write_formula(rr, 2, f"=IF({B_}=\"\",\"\",'{Q}'!{cell(src, 2)})", f["q_int_c"])
         cp.write_formula(rr, 3, f"=IF({B_}=\"\",\"\",'{Q}'!{cell(src, 3)})", f["q_row"])
-        cp.write_formula(rr, 4, f"=IF({B_}=\"\",\"\",'{Q}'!{cell(src, 6)})", f["q_amt"])
+        cp.write_formula(rr, 4, f"=IF({B_}=\"\",\"\",IF('{Q}'!{cell(src, 13)}=1,\"⚠ check\",'{Q}'!{cell(src, 6)}))",
+                         f["q_amt"])
     rr = 15 + (ar1 - ar0 + 1) + 1
     cp.merge_range(rr, 1, rr, 4, "Periodic services", f["q_h"]); rr += 1
     cp.set_row(rr, 30)
@@ -475,16 +501,17 @@ def build(key, outdir):
             cp.write_formula(rr, 4, fml, f["q_amt"])
         rr += 1
     cp.write_formula(fee0, 4, f"=NetMonthly-SUM({cell(fee0 + 1, 4)}:{cell(fee0 + 2, 4)})", f["q_amt"])
-    cp.merge_range(rr, 1, rr, 3, f"Subtotal per month (excl. {tax})", f["q_sub"])
+    cp.merge_range(rr, 1, rr, 3, "", f["q_sub"])
+    cp.write_formula(rr, 1, f'=IF(VATUsed>0,"Subtotal per month (excl. {tax})","Subtotal per month")', f["q_sub"])
     cp.write_formula(rr, 4, "=NetMonthly", f["q_sub_amt"]); rr += 1
     cp.merge_range(rr, 1, rr, 3, "", f["label"])
-    cp.write_formula(rr, 1, f'="{tax} "&TEXT(VATUsed,"0%")', f["label"])
-    cp.write_formula(rr, 4, "=VATAmt", f["q_amt"]); rr += 1
+    cp.write_formula(rr, 1, f'=IF(VATUsed>0,"{tax} "&TEXT(VATUsed,"0%"),"")', f["label"])
+    cp.write_formula(rr, 4, '=IF(VATUsed>0,VATAmt,"")', f["q_amt"]); rr += 1
     cp.set_row(rr, 22)
     cp.merge_range(rr, 1, rr, 3, "TOTAL PER MONTH", f["q_total"])
     cp.write_formula(rr, 4, "=Gross", f["q_total_amt"]); rr += 1
     cp.merge_range(rr, 1, rr, 4, "", f["q_small"])
-    cp.write_formula(rr, 1, f'="Annual contract value: "&TEXT(Annual,"#,##0.00")&" "&CurrencyLabel&" excl. {tax}."',
+    cp.write_formula(rr, 1, f'="Annual contract value: "&FIXED(Annual,2)&" "&CurrencyLabel&IF(VATUsed>0," excl. {tax}","")&"."',
                      f["q_small"]); rr += 1
     page2 = rr + 1
     cp.set_h_pagebreaks([page2])
@@ -554,7 +581,7 @@ def build(key, outdir):
 
     steps = [("Settings", f"Enter your business details, currency and {tax}, your wages, on-costs, supplies, overheads "
                           "and target margin. Yellow cells are yours; blue cells calculate."),
-             ("Production rates", "Check the m² per cleaner-hour for each area type. Time a few real visits and "
+             ("Production rates", "Check the area per cleaner-hour for each area type. Time a few real visits and "
                                   "adjust — this is what makes every bid accurate."),
              ("Bid Calculator", "Enter the client, then each area to clean with its size, frequency and traffic. "
                                 "Add periodic services (windows, carpets, floors) and any consumables you supply."),

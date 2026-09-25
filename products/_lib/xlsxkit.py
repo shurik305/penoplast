@@ -160,7 +160,7 @@ def start_here(b, ws, product, edition, version, brand, steps, tips, tax, extra_
     r += 1
     ws.set_row(r, 30)
     ws.write(r, 2, "Upload the file to Google Drive and open it with Google Sheets (or File → Import in Sheets). "
-                   "All formulas work. Sheet protection is not carried over, so be careful with blue cells.",
+                   "Only standard spreadsheet functions are used. Sheet protection is not carried over, so be careful with blue cells.",
              f["step"])
     r += 2
     ws.write(r, 2, "Tips from practice", f["label_b"])
@@ -183,7 +183,7 @@ def start_here(b, ws, product, edition, version, brand, steps, tips, tax, extra_
                    f"enter. This is not tax, legal or financial advice — check {tax} rules with your tax authority "
                    "or accountant.", f["step"])
     r += 2
-    ws.write(r, 2, "Questions or ideas? Message us through Etsy — we usually reply within 1–2 working days.",
+    ws.write(r, 2, "Questions or ideas? Message us through Etsy.",
              f["subtitle"])
     ws.activate()
 
@@ -288,7 +288,7 @@ def break_even_sheet(b, ws, tax, fixed, hours_week, weeks):
         ("Labour cost per hour (from Settings)", "=LabourCost", "c_num", None),
         ("Supplies per hour (from Settings)", "=Supplies", "c_num", None),
         (f"Break-even rate per labour hour (excl. {tax})", "=LabourCost+Supplies+FixedPerHr", "c_num_b", "BERate"),
-        ("Target rate with your profit margin", "=IF(Margin<1,BERate/(1-Margin),BERate)", "c_num", None),
+        ("Target rate with your profit margin", "=BERate/(1-MIN(MAX(Margin,0),0.95))", "c_num", None),
         ("Revenue needed per month just to break even", "=BERate*HoursMonth", "c_num", None),
     ]
     for lab, fml, fk, nm in rows:
@@ -300,7 +300,7 @@ def break_even_sheet(b, ws, tax, fixed, hours_week, weeks):
     ws.write(rr, 1, "Overheads per labour hour currently in Settings", f["label"])
     ws.write_formula(rr, 2, "=Overhead", f["c_num"])
     ws.write_formula(rr, 3, '=IF(ABS(Overhead-FixedPerHr)>0.5,"Tip: set Settings → Overheads per labour hour to "'
-                            '&TEXT(FixedPerHr,"0.00")&" to match your real fixed costs.","✔ Settings match your '
+                            '&FIXED(FixedPerHr,2)&" to match your real fixed costs.","✔ Settings match your '
                             'fixed costs.")', f["note"])
     rr += 1
     ws.write(rr, 1, "Your price per labour hour from Settings", f["label"])

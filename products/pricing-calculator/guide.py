@@ -122,20 +122,21 @@ def build(shot, out):
     y = heading(c, "Quote a job", y - 6, 18) - 4
     y = para(c, "Go to Quote Calculator. Enter the client, the service type, the floor area (or choose the number "
                 "of bedrooms), condition, frequency, number of cleaners, travel distance and any extras. The price, "
-                "hours on site, price per m² and your profit update instantly. A green message means the price "
-                "covers your costs and margin; a red one warns you are below break-even.", M, y, PW - 2 * M) - 6
+                "hours on site, price per m² and your profit update instantly. The status line is green when the "
+                "price meets your target margin, amber when it only covers your costs (usually because of "
+                "discounts), and red when it is below break-even or an item needs choosing again.", M, y, PW - 2 * M) - 6
     y = para(c, "Then open Client Quote — it is already filled in. Use File > Print > Save as PDF and send it to "
                 "your client. Record the quote in Quote Log to track your win rate and follow-ups.", M, y,
              PW - 2 * M) - 10
     y = heading(c, "Using Google Sheets", y, 18) - 4
     y = para(c, "Upload the .xlsx file to Google Drive, then open it with Google Sheets (or in Sheets: File > "
-                "Import > Upload). All formulas work. Sheet protection is not carried over to Google Sheets, so take "
+                "Import > Upload). Only standard spreadsheet functions are used. Sheet protection is not carried over to Google Sheets, so take "
                 "care not to type over the blue calculated cells.", M, y, PW - 2 * M) - 10
     y = heading(c, "Licence and support", y, 18) - 4
     y = para(c, "Licensed for use in your own business. Please do not resell, share or redistribute the files. "
                 "The default rates are examples — results depend on the numbers you enter. This is not tax, legal "
                 "or financial advice; check VAT/GST rules with your tax authority or accountant.", M, y, PW - 2 * M)
-    y = para(c, "Questions or suggestions? Message us through Etsy — we usually reply within 1–2 working days.",
+    y = para(c, "Questions or suggestions? Message us through Etsy.",
              M, y - 6, PW - 2 * M, font="Inter600", color=BLUE)
     footer(c, 2)
     c.save()
