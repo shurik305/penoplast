@@ -62,7 +62,7 @@ def main(dist, outdir):
             "What's inside", "6 connected sheets — set up once, then bid any site in minutes.",
             os.path.join(outdir, "02-whats-inside.jpg"))
     mk.feature(t(uk["Bid Calculator"][0]), "Bid any site in minutes",
-               "Areas × frequency ÷ m² per hour → hours → monthly fee.",
+               "Area × frequency ÷ m² per hour gives hours and the monthly fee.",
                ["Offices, toilets, kitchens, stairs, clinics & more", "Traffic level per area",
                 "Windows, carpets, floor care per year", "Warns you below break-even"],
                os.path.join(outdir, "03-calculator.jpg"))

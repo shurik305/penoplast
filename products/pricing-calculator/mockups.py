@@ -328,7 +328,7 @@ def main(dist, outdir):
     img_hero(uk, os.path.join(outdir, "01-hero.jpg"))
     img_inside(uk, os.path.join(outdir, "02-whats-inside.jpg"))
     img_feature(uk, "Quote Calculator", "Quote every job in a minute",
-                "Area or bedrooms → hours, price, VAT and profit.",
+                "From area or bedrooms to hours, price, VAT and profit.",
                 ["Service, condition, frequency & extras", "Travel beyond your free radius",
                  "Minimum charge and rounding", "Warns you below break-even"], os.path.join(outdir, "03-calculator.jpg"))
     img_feature(uk, "Client Quote", "A professional quote, ready to send",
@@ -340,7 +340,7 @@ def main(dist, outdir):
                 ["Post it on your website or flyers", "Weekly, fortnightly & monthly rates",
                  "Updates when your costs change"], os.path.join(outdir, "05-price-list.jpg"))
     img_feature(uk, "Break-even", "Know your minimum hourly rate",
-                "Fixed costs + hours → the rate you must never go below.",
+                "Fixed costs and hours give the rate you must never go below.",
                 ["Covers wages, supplies & overheads", "Revenue you need each month",
                  "Checks your settings against reality"], os.path.join(outdir, "06-break-even.jpg"), landscape=False)
     img_editions(ed, os.path.join(outdir, "07-editions.jpg"))

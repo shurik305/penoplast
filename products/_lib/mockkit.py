@@ -16,6 +16,13 @@ def font(weight, size):
     return ImageFont.truetype(os.path.join(FONTS, f"Inter-{weight}.ttf"), size)
 
 
+def missing_glyphs(text):
+    """Characters the bundled Inter subset cannot draw (they would render as empty boxes)."""
+    from fontTools.ttLib import TTFont
+    cmap = TTFont(os.path.join(FONTS, "Inter-400.ttf")).getBestCmap()
+    return sorted({ch for ch in text if not ch.isspace() and ord(ch) not in cmap})
+
+
 def pdf_pages(xlsx, title_map, dpi=220):
     """Renders the workbook via LibreOffice. title_map: {first text line on the page: key}.
 
