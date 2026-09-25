@@ -43,3 +43,7 @@ python3 guide.py listing/raw/bid-calculator-1.png dist/Quick-Start-Guide.pdf
 - Мережа "trusted": лише GitHub/npm/PyPI; WebFetch заблокований; WebSearch працює.
 - Не просити власника вставляти токени в чат; секрети — лише як змінні середовища.
 - Холодні email/DM у Данії заборонені (Markedsføringsloven §10) — лише вхідні канали.
+
+## Розклад
+- Наступне автоматичне продовження: 2026-09-25 06:06 UTC (send_later, trig_01Wa4MzKcE5289D97UYUj5Yt) — продукт №3 або публікація.
+- Якщо все блокується власником: перевірки не частіше ніж раз на добу.
