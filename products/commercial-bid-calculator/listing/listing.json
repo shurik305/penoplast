@@ -1,0 +1,29 @@
+{
+  "_comment": "Etsy listing for EXP-001 product 2. Used by tools/etsy_api.py publish.",
+  "title": "Commercial Cleaning Bid Calculator, Office Cleaning Proposal Template, Janitorial Bid Spreadsheet, m² VAT, Excel & Google Sheets",
+  "tags": [
+    "commercial cleaning", "cleaning bid", "janitorial bid", "cleaning proposal", "office cleaning",
+    "cleaning contract", "bid calculator", "cleaning business", "cleaning estimate", "pricing spreadsheet",
+    "cleaning quote", "janitorial template", "google sheets"
+  ],
+  "materials": ["Excel spreadsheet (.xlsx)", "PDF"],
+  "price_usd": 18.99,
+  "price_dkk": 129,
+  "quantity": 999,
+  "type": "download",
+  "who_made": "i_did",
+  "when_made": "2020_2026",
+  "is_supply": false,
+  "should_auto_renew": true,
+  "taxonomy_search": "templates",
+  "description_file": "description.txt",
+  "images": [
+    "images/01-hero.jpg", "images/02-whats-inside.jpg", "images/03-calculator.jpg", "images/04-proposal.jpg",
+    "images/05-settings.jpg", "images/06-editions.jpg", "images/07-how-it-works.jpg"
+  ],
+  "files": [
+    "../dist/Commercial-Cleaning-Bid-Calculator_UK.xlsx", "../dist/Commercial-Cleaning-Bid-Calculator_EU.xlsx",
+    "../dist/Commercial-Cleaning-Bid-Calculator_AU.xlsx", "../dist/Commercial-Cleaning-Bid-Calculator_US.xlsx",
+    "../dist/Quick-Start-Guide.pdf"
+  ]
+}

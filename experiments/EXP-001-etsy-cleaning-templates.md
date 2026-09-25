@@ -37,8 +37,8 @@
 | 10 | Масштаб: +2–3 лістинги/тиждень, варіанти UK/EU/AU, набір-бандл, Gumroad | агент | — |
 
 ## Лінійка продуктів (черга)
-1. Cleaning Price & Quote Calculator (м² + ПДВ) — $16.
-2. Commercial / office cleaning bid calculator (м², частота/тиждень, місячна ціна) — $19.
+1. Cleaning Price & Quote Calculator (м² + ПДВ) — 89 DKK (~$13). ГОТОВИЙ.
+2. Commercial Cleaning Bid Calculator (м², частота/тиждень, місячна абонплата, штат, пропозиція 2 стор.) — 129 DKK (~$19). ГОТОВИЙ.
 3. Short-let / Airbnb turnover kit: чекліст + журнал + трекер витратних матеріалів — $11.
 4. Window cleaning price calculator — $12.
 5. Bundle "Cleaning Business Pricing Toolkit" (1+2+4) — $34.
@@ -50,6 +50,7 @@
 ## Виконані дії
 - 2026-09-24: дослідження, вибір моделі, старт MVP.
 - 2026-09-24: продукт №1 готовий (4 xlsx + PDF), QA пройдено, 8 зображень, опис/теги, Etsy API-інструмент.
+- 2026-09-25: продукт №2 готовий (4 xlsx + PDF), QA пройдено, 7 зображень, опис/теги; спільна бібліотека products/_lib.
 
 ## Наступна дія
 Завершити продукт №1 і пакет лістингу; отримати дозволи власника (ops/OWNER_ACTIONS.md).

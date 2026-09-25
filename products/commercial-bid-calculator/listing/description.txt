@@ -1,0 +1,51 @@
+Price office and commercial cleaning contracts in minutes — by floor area in m² (or sq ft), cleaning frequency and production rates — and send a professional two-page proposal with the monthly fee, scope of work and terms.
+
+Made for cleaning companies bidding on offices, shops, clinics, gyms and small commercial sites in the UK, Ireland, Europe, Australia, New Zealand, the US and Canada.
+
+★ HOW THE PRICE IS BUILT
+Area × frequency ÷ production rate (m² per cleaner-hour) → hours per week → hours per month, plus periodic services and supervision time → labour, supplies and overheads → your target margin → a monthly fee (with minimum fee and rounding). Consumables you supply are added with a handling mark-up.
+
+★ WHAT'S INSIDE — 6 connected sheets
+• Bid Calculator — up to 12 areas and 8 periodic services; monthly fee, VAT, annual contract value, hours per week, busiest visit, team size for your cleaning window, price per m², profit per month
+• Client Proposal — two A4 pages filled in automatically: areas and frequencies, monthly fee, scope of work for each area type, contract terms and signature lines
+• Settings — 12 area types with production rates and task lists, 7 frequencies, traffic levels, 8 periodic services, wages, on-costs, supervision, supplies, overheads, margin, VAT/GST, minimum fee, contract clauses
+• Break-even — your monthly fixed costs and hours → the minimum rate per labour hour
+• Bid Log — win rate, won monthly revenue, open pipeline, overdue follow-ups
+• Start Here — setup steps and bidding tips
+
+★ 12 AREA TYPES (rename or change them)
+General office / open plan, private offices, meeting rooms, reception, corridors, stairwells, toilets/washrooms, kitchen/break room, retail floor, clinic/treatment rooms, warehouse/workshop, gym/changing rooms.
+
+★ 8 PERIODIC SERVICES
+Interior windows, carpet extraction, hard floor scrub, strip & re-seal, high-level dusting, upholstered chairs, kitchen appliances, blinds — priced per m² or per item, averaged per month.
+
+★ 4 EDITIONS INCLUDED
+• UK — GBP, VAT 20%, m²
+• EU & Ireland — EUR, VAT (set your country's rate), m²
+• Australia & NZ — AUD, GST 10%, m²
+• US & Canada — USD, square feet
+Any currency and tax rate can be set in any edition.
+
+★ WHAT YOU GET (instant download)
+• 4 × .xlsx spreadsheet (one per edition)
+• Quick-Start Guide (PDF, 2 pages)
+
+★ WORKS IN
+Microsoft Excel 2010 or newer (Windows and Mac), Microsoft 365, Google Sheets (upload the file to Google Drive), LibreOffice. No macros, no subscription, no sign-up.
+
+★ GOOD TO KNOW
+• Default production rates and costs are realistic starting points — calibrate them with your own timings.
+• The proposal's contract clauses are editable text, not legal advice — have your own terms reviewed.
+• Calculated cells are protected without a password; unprotect any sheet to customise it.
+• This is a digital download — nothing will be shipped.
+
+★ HOW IT WAS MADE
+{{MADE_BY}} All formulas were tested in all four editions.
+
+★ LICENCE
+For use in your own business. Please don't resell, share or redistribute the files.
+
+★ REFUNDS
+Because this is an instant digital download, returns and exchanges aren't accepted. The download starts immediately after purchase, so the right of withdrawal ends once it has started. If anything doesn't work, send us a message — we'll fix it or help you set it up.
+
+Questions? Send a message — we usually reply within 1–2 working days.
