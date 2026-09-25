@@ -49,4 +49,4 @@ python3 guide.py listing/raw/cleaning-fee-calculator-1.png dist/Quick-Start-Guid
 - Холодні email/DM у Данії заборонені (Markedsføringsloven §10) — лише вхідні канали.
 
 ## Розклад
-- Наступна перевірка: див. JOURNAL (раз на добу, поки все чекає на власника).
+- Наступна перевірка: 2026-09-26 06:16 UTC (send_later, trig_01CJSg9t1DaTwYtpiCD5Zw8t); далі раз на добу, поки все чекає на власника.
