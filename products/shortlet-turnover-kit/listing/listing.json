@@ -1,14 +1,27 @@
 {
-  "_comment": "Etsy listing for EXP-001 product 3. 'Airbnb' is used descriptively only (not affiliated).",
-  "title": "Short Term Rental Cleaning Checklist for Airbnb Hosts, Turnover Log, Restock List & Cleaning Fee Calculator, Excel Google Sheets",
+  "_comment": "Etsy listing for EXP-001 product 3. No trademarks in title/tags (roast #1); one descriptive mention in the body.",
+  "title": "Short Term Rental Cleaning Checklist & Turnover Log, Holiday Let Cleaning Fee Calculator, Restock List, Excel Spreadsheet + PDF",
   "tags": [
-    "airbnb cleaning", "cleaning checklist", "turnover checklist", "airbnb host", "short term rental",
-    "vacation rental", "cleaning log", "restock list", "host checklist", "cleaning fee", "rental checklist",
-    "cleaner checklist", "google sheets"
+    "short term rental",
+    "vacation rental",
+    "holiday let",
+    "cleaning checklist",
+    "turnover checklist",
+    "cleaning log",
+    "restock list",
+    "host checklist",
+    "cleaning fee",
+    "rental checklist",
+    "cleaner checklist",
+    "str cleaning",
+    "google sheets"
   ],
-  "materials": ["Excel spreadsheet (.xlsx)", "PDF"],
-  "price_usd": 11.99,
-  "price_dkk": 79,
+  "materials": [
+    "Excel spreadsheet (.xlsx)",
+    "PDF"
+  ],
+  "price_usd": 6.99,
+  "price_dkk": 49,
   "quantity": 999,
   "type": "download",
   "who_made": "i_did",
@@ -18,11 +31,18 @@
   "taxonomy_search": "templates",
   "description_file": "description.txt",
   "images": [
-    "images/01-hero.jpg", "images/02-whats-inside.jpg", "images/03-checklist.jpg", "images/04-fee-calculator.jpg",
-    "images/05-turnover-log.jpg", "images/06-restock.jpg", "images/07-how-it-works.jpg"
+    "images/01-hero.jpg",
+    "images/02-whats-inside.jpg",
+    "images/03-checklist.jpg",
+    "images/04-fee-calculator.jpg",
+    "images/05-turnover-log.jpg",
+    "images/06-restock.jpg",
+    "images/07-how-it-works.jpg"
   ],
   "files": [
-    "../dist/Short-Let-Turnover-Kit.xlsx", "../dist/Turnover-Checklist-Printable.pdf",
-    "../dist/Damage-Issue-Report-Printable.pdf", "../dist/Quick-Start-Guide.pdf"
+    "../dist/Short-Let-Turnover-Kit.xlsx",
+    "../dist/Turnover-Checklist-Printable.pdf",
+    "../dist/Damage-Issue-Report-Printable.pdf",
+    "../dist/Quick-Start-Guide.pdf"
   ]
 }

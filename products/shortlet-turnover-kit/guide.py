@@ -38,5 +38,4 @@ if __name__ == "__main__":
          ("Using Google Sheets", ["Upload the .xlsx file to Google Drive and open it with Google Sheets. All "
                                   "formulas work; sheet protection is not carried over, so take care with blue cells."]),
          ("Licence", ["Licensed for use in your own business. Please do not resell, share or redistribute the files. "
-                      "Airbnb is a trademark of Airbnb, Inc.; this kit is independent and not affiliated with or "
-                      "endorsed by Airbnb or any booking platform."])]))
+                      "This kit is independent and not affiliated with or endorsed by any booking platform."])]))

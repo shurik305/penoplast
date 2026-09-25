@@ -38,7 +38,7 @@ def main(dist, outdir):
     d.ellipse((1900, -500, 3500, 1100), fill=(226, 236, 248))
     mk.pill(d, 150, 150, "PRINTABLE PDF + EXCEL / GOOGLE SHEETS", 40)
     y = mk.headline(d, 150, 300, ["Short-Let", "Turnover Kit"], 124)
-    for ln in ["For Airbnb & holiday-let hosts", "and the cleaners who turn them over"]:
+    for ln in ["For holiday-let & short-term rental", "hosts and the cleaners who turn them over"]:
         d.text((150, y + 20), ln, font=mk.font(600, 62), fill=mk.BLUE)
         y += 80
     y += 90
@@ -83,7 +83,7 @@ def main(dist, outdir):
                      ("Turn over with confidence", "Print the checklist, log each clean, price your cleaning fee and "
                                                    "restock before you run out.")],
                     "Microsoft Excel 2010 or newer · Excel for Mac · Microsoft 365 · Google Sheets · LibreOffice",
-                    "Not affiliated with Airbnb or any booking platform. No macros, no subscriptions.",
+                    "Not affiliated with any booking platform. No macros, no subscriptions.",
                     os.path.join(outdir, "07-how-it-works.jpg"))
     return sorted(os.listdir(outdir))
 
